@@ -1,27 +1,21 @@
 import { useState } from "react";
 import "./App.css";
-
-type Question = {
-  firstNumber: number;
-  secondNumber: number;
-  answer: number;
-};
+import { Question } from "./Question";
+import QuestionAndAnswer from "./QuestionAndAnswer";
 
 function App() {
-  const [questions, setQuestions] = useState<Question[]>([
-    { firstNumber: 0, secondNumber: 0, answer: 0 },
-    { firstNumber: 1, secondNumber: 2, answer: 3 },
-  ]);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   const [nrOfQuestions, setNrOfQuestions] = useState<number>(10);
   const [maxValue, setMaxValue] = useState<number>(20);
+  const [showResult, setShowResult] = useState<boolean>(false);
 
   function handleGenerate(): void {
     const newQuestions: Question[] = [];
     for (let i = 0; i < nrOfQuestions; i++) {
-      const firstNumber = Math.floor(Math.random() * maxValue);
-      const secondNumber = Math.floor(Math.random() * maxValue);
-      const answer = firstNumber + secondNumber;
+      const answer = Math.floor(Math.random() * maxValue);
+      const firstNumber = Math.floor(Math.random() * answer);
+      const secondNumber = answer - firstNumber;
       newQuestions.push({ firstNumber, secondNumber, answer });
     }
     setQuestions(newQuestions);
@@ -30,38 +24,49 @@ function App() {
   return (
     <>
       <div>
-        <label htmlFor="nrOfQuestions">Antal tal:</label>
-        <input
-          type="number"
-          id="nrOfQuestions"
-          name="nrOfQuestions"
-          value={nrOfQuestions}
-          onChange={(e) => setNrOfQuestions(Number(e.target.value))}
-        />
-        <label htmlFor="maxValue">Max värde:</label>
-        <input
-          type="number"
-          id="maxValue"
-          name="maxValue"
-          value={maxValue}
-          onChange={(e) => setMaxValue(Number(e.target.value))}
-        />
-        <button onClick={() => handleGenerate()}>Generera</button>
+        <div className="parameter-row">
+          <label htmlFor="nrOfQuestions">Antal tal:</label>
+          <input
+            type="number"
+            id="nrOfQuestions"
+            name="nrOfQuestions"
+            value={nrOfQuestions}
+            onChange={(e) => setNrOfQuestions(Number(e.target.value))}
+          />
+        </div>
+        <div className="parameter-row">
+          <label htmlFor="maxValue">Max värde:</label>
+          <input
+            type="number"
+            id="maxValue"
+            name="maxValue"
+            value={maxValue}
+            onChange={(e) => setMaxValue(Number(e.target.value))}
+          />
+        </div>
+        <div className="parameter-row">
+          <button style={{ flex: 1 }} onClick={() => handleGenerate()}>
+            Skapa tal
+          </button>
+        </div>
       </div>
-      <h1>Tal:</h1>
-      <div>
-        {questions.map((question, index) => (
-          <div key={index}>
-            <span>{`${question.firstNumber} + ${question.secondNumber} = `}</span>
-            <input
-              type="number"
-              id={`answer-${index}`}
-              name={`answer-${index}`}
-              data-answer={question.answer}
-            ></input>
+      {questions.length > 0 && (
+        <>
+          <h2>Tal:</h2>
+          <div className="questions-container">
+            {questions.map((question, index) => (
+              <QuestionAndAnswer
+                key={index}
+                question={question}
+                showResult={showResult}
+              />
+            ))}
           </div>
-        ))}
-      </div>
+          <div className="parameter-row">
+            <button onClick={() => setShowResult(!showResult)}>Rätta</button>
+          </div>
+        </>
+      )}
     </>
   );
 }

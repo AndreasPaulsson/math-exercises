@@ -32,6 +32,7 @@ function App() {
             name="nrOfQuestions"
             value={nrOfQuestions}
             onChange={(e) => setNrOfQuestions(Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
           />
         </div>
         <div className="parameter-row">
@@ -42,6 +43,7 @@ function App() {
             name="maxValue"
             value={maxValue}
             onChange={(e) => setMaxValue(Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
           />
         </div>
         <div className="parameter-row">

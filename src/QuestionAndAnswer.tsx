@@ -17,6 +17,7 @@ function QuestionAndAnswer(props: { question: Question; showResult: boolean }) {
         data-answer={props.question.answer}
         value={answer}
         onChange={(e) => setAnswer(Number(e.target.value))}
+        onFocus={(e) => e.target.select()}
       ></input>
       {props.showResult && (
         <span>{`${props.question.answer === answer ? "Rätt!" : "Fel"}`}</span>

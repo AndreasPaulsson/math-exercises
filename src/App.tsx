@@ -5,6 +5,7 @@ import QuestionAndAnswer from "./QuestionAndAnswer";
 
 function App() {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [questionId, setQuestionId] = useState<number>(0);
 
   const [nrOfQuestions, setNrOfQuestions] = useState<number>(10);
   const [maxValue, setMaxValue] = useState<number>(20);
@@ -19,6 +20,8 @@ function App() {
       newQuestions.push({ firstNumber, secondNumber, answer });
     }
     setQuestions(newQuestions);
+    setShowResult(false);
+    setQuestionId(questionId + nrOfQuestions);
   }
 
   return (
@@ -58,7 +61,7 @@ function App() {
           <div className="questions-container">
             {questions.map((question, index) => (
               <QuestionAndAnswer
-                key={index}
+                key={index + questionId}
                 question={question}
                 showResult={showResult}
               />

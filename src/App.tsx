@@ -50,10 +50,10 @@ function App() {
   }
 
   function generateSubtraction(maxValue: number): Question {
-    const firstNumber = Math.floor(Math.random() * maxValue);
-    const secondNumber = Math.floor(
-      Math.random() * (maxValue - firstNumber - 1)
+    const firstNumber = Math.floor(
+      0.2 * maxValue + Math.random() * (0.8 * maxValue)
     );
+    const secondNumber = Math.floor(Math.random() * (firstNumber - 1));
     const answer = firstNumber - secondNumber;
     return { firstNumber, secondNumber, answer, operation: "subtraction" };
   }

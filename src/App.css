@@ -60,7 +60,27 @@
   }
 }
 
-.questions-container {
+.operations-row {
+
+  display: flex;
+  button {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  button:first-child {
+    margin-left: 0;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+
+  button.selected {
+    border-width: 2px;
+    border-color: white;
+  }
 }
 
 .question-container {

@@ -1,13 +1,27 @@
 import { useState } from "react";
 import { Question } from "./Question";
+import { Operation } from "./Operation";
 
 function QuestionAndAnswer(props: { question: Question; showResult: boolean }) {
   const [answer, setAnswer] = useState<number>(0);
 
+  function getOperationSymbol(operation: Operation): string {
+    switch (operation) {
+      case "addition":
+        return "+";
+      case "subtraction":
+        return "-";
+      case "multiplication":
+        return "*";
+      case "division":
+        return "/";
+    }
+  }
+
   return (
     <div className="question-container" style={{ display: "flex" }}>
       <span>{`${props.question.firstNumber}`}</span>
-      <span> + </span>
+      <span> {getOperationSymbol(props.question.operation)} </span>
       <span>{`${props.question.secondNumber}`}</span>
       <span> = </span>
       <input

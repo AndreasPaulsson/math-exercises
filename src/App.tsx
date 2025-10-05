@@ -43,24 +43,23 @@ function App() {
   }
 
   function generateMultiplication(maxValue: number): Question {
-    const firstNumber = Math.floor(Math.random() * Math.sqrt(maxValue));
-    const secondNumber = Math.floor((Math.random() * maxValue) / firstNumber);
+    const sqrtOfMax = Math.round(Math.sqrt(maxValue));
+    const firstNumber = Math.floor(Math.random() * (sqrtOfMax - 1)) + 1;
+    const secondNumber = Math.floor(Math.random() * (sqrtOfMax - 1)) + 1;
     const answer = firstNumber * secondNumber;
     return { firstNumber, secondNumber, answer, operation: "multiplication" };
   }
 
   function generateSubtraction(maxValue: number): Question {
-    const firstNumber = Math.floor(
-      0.2 * maxValue + Math.random() * (0.8 * maxValue)
-    );
-    const secondNumber = Math.floor(Math.random() * (firstNumber - 1));
+    const firstNumber = Math.round(Math.random() * (maxValue - 1)) + 1;
+    const secondNumber = Math.round(Math.random() * (firstNumber - 2)) + 1;
     const answer = firstNumber - secondNumber;
     return { firstNumber, secondNumber, answer, operation: "subtraction" };
   }
 
   function generateAddition(maxValue: number): Question {
-    const answer = Math.floor(Math.random() * maxValue);
-    const firstNumber = Math.floor(Math.random() * answer);
+    const answer = Math.round(Math.random() * (maxValue - 2)) + 2;
+    const firstNumber = Math.floor(Math.random() * (answer - 1)) + 1;
     const secondNumber = answer - firstNumber;
     return { firstNumber, secondNumber, answer, operation: "addition" };
   }

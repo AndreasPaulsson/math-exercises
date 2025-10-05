@@ -36,9 +36,11 @@ function App() {
   }
 
   function generateDivision(maxValue: number): Question {
-    const answer = Math.floor(Math.random() * maxValue);
-    const secondNumber = Math.floor(Math.random() * answer);
-    const firstNumber = answer * secondNumber;
+    const sqrtOfMax = Math.round(Math.sqrt(maxValue));
+    let firstNumber = Math.round(Math.random() * (maxValue - 2)) + 2;
+    const secondNumber = Math.floor(Math.random() * (sqrtOfMax - 2)) + 2;
+    const answer = Math.floor(firstNumber / secondNumber);
+    firstNumber = answer * secondNumber;
     return { firstNumber, secondNumber, answer, operation: "division" };
   }
 

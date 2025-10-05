@@ -15,15 +15,21 @@ function App() {
 
   function handleGenerate(): void {
     const newQuestions: Question[] = [];
-    for (let i = 0; i < nrOfQuestions; i++) {
-      newQuestions.push(generateQuestiun(operation, maxValue));
+    const existingQuestions = new Set<string>();
+    while (newQuestions.length < nrOfQuestions) {
+      const newQuestion = generateQuestion(operation, maxValue);
+      const questionKey = `${newQuestion.firstNumber}-${newQuestion.operation}-${newQuestion.secondNumber}`;
+      if (!existingQuestions.has(questionKey)) {
+        newQuestions.push(newQuestion);
+        existingQuestions.add(questionKey);
+      }
     }
     setQuestions(newQuestions);
     setShowResult(false);
     setQuestionId(questionId + nrOfQuestions);
   }
 
-  function generateQuestiun(operation: Operation, maxValue: number): Question {
+  function generateQuestion(operation: Operation, maxValue: number): Question {
     if (operation == "addition") {
       return generateAddition(maxValue);
     } else if (operation == "subtraction") {
@@ -33,6 +39,12 @@ function App() {
     } else {
       return generateDivision(maxValue);
     }
+  }
+
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
   }
 
   function generateDivision(maxValue: number): Question {
@@ -45,9 +57,9 @@ function App() {
   }
 
   function generateMultiplication(maxValue: number): Question {
-    const sqrtOfMax = Math.round(Math.sqrt(maxValue));
-    const firstNumber = Math.floor(Math.random() * (sqrtOfMax - 1)) + 1;
-    const secondNumber = Math.floor(Math.random() * (sqrtOfMax - 1)) + 1;
+    const maxFactor = Math.ceil(Math.sqrt(maxValue));
+    const firstNumber = getRandomInt(1, maxFactor);
+    const secondNumber = getRandomInt(1, maxFactor);
     const answer = firstNumber * secondNumber;
     return { firstNumber, secondNumber, answer, operation: "multiplication" };
   }
